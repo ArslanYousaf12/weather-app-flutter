@@ -28,8 +28,40 @@ class _HomeScreenState extends State<HomeScreen> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text("Enter a city name"),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          title: Row(
+            children: [
+              Icon(Icons.location_city, color: Colors.blue[700]),
+              SizedBox(width: 10),
+              Text(
+                "Find Weather",
+                style: TextStyle(
+                  fontSize: 22,
+                  color: Colors.blue[800],
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
           content: TextField(
+            autofocus: true,
+            cursorColor: Colors.blue[700],
+            decoration: InputDecoration(
+              hintText: "Enter city name...",
+              prefixIcon: Icon(Icons.search, color: Colors.blue[400]),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: BorderSide(color: Colors.blue[700]!, width: 2),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: BorderSide(color: Colors.grey[300]!),
+              ),
+              filled: true,
+              fillColor: Colors.grey[100],
+            ),
             onChanged: (value) {
               city = value;
             },
@@ -46,16 +78,26 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: () {
                 Navigator.pop(context);
               },
+              style: TextButton.styleFrom(foregroundColor: Colors.grey[700]),
               child: Text("Cancel"),
             ),
-            TextButton(
+            ElevatedButton(
               onPressed: () {
                 if (city != null && city!.isNotEmpty) {
                   _getWeather(city!);
                 }
                 Navigator.pop(context);
               },
-              child: Text("Submit"),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue[700],
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                elevation: 2,
+              ),
+              child: Text("Get Weather"),
             ),
           ],
         );
@@ -174,10 +216,17 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
         onPressed: _showDialog,
-        child: Icon(Icons.find_in_page),
+
+        backgroundColor: Colors.blue[700],
+        foregroundColor: Colors.white,
+        elevation: 4,
+        icon: Icon(Icons.search_rounded),
+        label: Text("Search City"),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
